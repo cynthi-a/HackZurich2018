@@ -163,7 +163,8 @@ def searchResult():
 @app.route('/add', methods=['GET', 'POST'])
 def addDrug():
     if request.method == 'POST':
-        add_drug = Drug(drugId=drugId, qty=1, user_id=1)
+        quantity = request.form['qty']
+        add_drug = Drug(drugId=drugId, qty=quantity, user_id=1)
         db.session.add(add_drug)
         db.session.commit()
     return render_template("pages/add_drug.html", result = drugId)
