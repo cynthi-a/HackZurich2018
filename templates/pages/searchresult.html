@@ -7,13 +7,11 @@
   
   {% for drug in drugslist %}
   
-  <div class="drug-result">
-    <h4>Swissmedic Id</h4>
-    <div>{{ drug.swissmedicIds }}</div>
-    <p>Name: {{ drug.title }}</p>
-    <p>Substances: {{ drug.substances }}</p>
-    {{ drug.title  }}
-    <a href="/add" type="button" class="btn btn-primary">Add Drug To Cabinet</a>
+  <div class="drugs-result">
+    <strong>{{ drug.title }}</strong>
+    <div><strong>Swissmedic Id</strong>: {{ drug.swissmedicIds }}</div>
+    <div><strong>Substances</strong>{{ drug.substances }}</div>
+    <a href="/add" type="button" class="btn btn-primary">Add To Cabinet</a>
   </div>
   
   {% endfor %}
