@@ -32,6 +32,12 @@ a {
 /*****************************************************************************
  * Various other styles
  ****************************************************************************/
+.progress {
+  min-width: -webkit-fill-available;
+}
+.drug-info {
+  width: -webkit-fill-available;
+}
 
 /* Various other styles end */
 
