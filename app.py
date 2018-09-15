@@ -12,6 +12,9 @@ from sqlalchemy import ForeignKey
 from forms import *
 import os
 import requests
+import urllib
+import sys
+import re
 import json
 from flask_sqlalchemy import SQLAlchemy
 import sys
@@ -122,7 +125,7 @@ def register():
         new_user = User(username=str(form.name), password=str(form.password), email=str(form.email))
         db.session.add(new_user)
         db.session.commit()
-        return render_template('forms/login.html', form=form)
+        return render_template('pages/home.html', form=form)
     return render_template('forms/register.html', form=form)
 
 
@@ -169,25 +172,30 @@ def addDrug():
 @app.route('/interaction')
 def checkInteraction():
     #TODO: get list of drugs
-    #getNormIdByName(name)
+    name1 = 'lipitor'
+    name2 = 'paracetamol'
+    name3 = 'ritalin'
+    normId = str(getNormIdByName(name1))
+    normId2 = str(getNormIdByName(name2))
+    normId3 = str(getNormIdByName(name3))
 
-    name1 = 'aspirin'
-    name2 = 'test'
-    #get RxNorm
-    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name1
+    #getDrugsInteraction
+    prepareUrl = "https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=" + normId + "+" + normId2 + "+" + normId3
+    url = urllib.urlopen(prepareUrl)
+    data = json.load(url)
+
+    severity = data['fullInteractionTypeGroup'][0]['fullInteractionType'][0]['interactionPair'][0]['severity']
+
+    return render_template("pages/interaction.html", severity=severity)
+
+def getNormIdByName(name):
+    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
     RxResponse = requests.get(RxUrl)
-    print("----RESPONSE-----")
-    print(RxResponse.text)
     response = RxResponse.text
-    normId = response["rxnormId"]
-    print("-----PARSE----")
-    #print(normId)
+    numbers = map(int, re.findall(r'\d+', response))
+    normId = numbers[-1]
 
-    return render_template("pages/interaction.html")
-
-#def getNormIdByName(name)
-#    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
-#    RxResponse = requests.get(RxUrl)
+    return normId
 
 # Error handlers.
 @app.errorhandler(500)
