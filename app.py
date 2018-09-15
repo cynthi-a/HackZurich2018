@@ -72,7 +72,8 @@ def forgot():
 @app.route('/search')
 def searchDrug():
     form = SearchDrugForm(request.form)
-    return render_template('forms/search_drugs.html', form=form) 
+    testuser = User.query.get(1)
+    return render_template('forms/search_drugs.html', form=form, testuser = testuser) 
 
 
 @app.route('/search/result',methods = ['POST', 'GET'])
@@ -108,12 +109,14 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.info('errors')
 
+
 #----------------------------------------------------------------------------#
 # Launch.
 #----------------------------------------------------------------------------#
 
 # Default port:
 if __name__ == '__main__':
+
     app.run()
 
 # Or specify port manually:
