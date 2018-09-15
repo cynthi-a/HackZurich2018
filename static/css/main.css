@@ -106,6 +106,10 @@ a {
   display: grid;
   grid-row-gap: 10px;
 }
+.drugs-result {
+  display: grid;
+  grid-row-gap: 5px;
+}
 
 /*****************************************************************************
  * reorder.html
