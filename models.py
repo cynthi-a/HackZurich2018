@@ -23,7 +23,7 @@ class User(db.Model):
     def __init__(self, name=None, password=None, drug=None):
         self.name = name
         self.password = password
-        self.drug = drug
+        self.drug = drug;
 
 class Drugs(db.Model):
     __tablename__ = 'Drugs'
@@ -49,4 +49,3 @@ class User(Base):
 
 # Create tables.
 Base.metadata.create_all(bind=engine)
-    #db.session.commit()

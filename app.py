@@ -72,7 +72,6 @@ def forgot():
 @app.route('/search')
 def searchDrug():
     form = SearchDrugForm(request.form)
-    testuser = User.query.get(1)
     return render_template('forms/search_drugs.html', form=form, testuser = testuser) 
 
 
