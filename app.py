@@ -42,8 +42,6 @@ def login_required(test):
 # Controllers.
 #----------------------------------------------------------------------------#
 
-global searchDrug
-
 @app.route('/')
 def home():
     return render_template('pages/home.html')
@@ -83,20 +81,29 @@ def searchResult():
       url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
       response = requests.get(url, headers={"Authorization":"awesome attention"})
       result = response.text
+
       #parse api response
       data = json.loads(result)
       #TODO: loop thourgh all returned objects and all their strings
       firstDrug = data[0]
+      global drugId
       drugId = firstDrug['swissmedicIds'][0]
       name = firstDrug['title']
       substances = firstDrug['substances'][0]
-      searchDrug = drugId
-      return render_template("pages/searchresult.html",drugId = drugId, name = name, substances = substances)
+      setDrugId(drugId)
+      return render_template("pages/searchresult.html", drugId = drugId, name = name, substances = substances)
+
+def setDrugId(_drugId):
+    drugId = _drugId
+    return drugId
+
+def getDrugId():
+    return drugId
 
 @app.route('/add')
 def addDrug():
-    result = searchDrug
-    return render_template("pages/add_drug.html", result = result)
+    drugId = getDrugId()
+    return render_template("pages/add_drug.html", result = drugId)
 
 # Error handlers.
 
