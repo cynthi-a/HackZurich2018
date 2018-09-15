@@ -114,7 +114,7 @@ def register():
         new_user = User(username=str(form.name), password=str(form.password), email=str(form.email))
         db.session.add(new_user)
         db.session.commit()
-        return render_template('forms/login.html', form=form)
+        return render_template('pages/home.html', form=form)
     return render_template('forms/register.html', form=form)
 
 

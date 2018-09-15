@@ -38,9 +38,6 @@ a {
 .drug-info {
   width: -webkit-fill-available;
 }
-form {
-  display: flex;
-}
 #drugname {
   width: -webkit-fill-available;
 }
@@ -116,4 +113,19 @@ form {
 .reorder-drug {
   justify-content: center;
   display: flex;
+}
+
+/*****************************************************************************
+ * search_drugs.html
+ ****************************************************************************/
+.search-drug-form {
+  display: flex;
+}
+
+/*****************************************************************************
+ * register.html
+ ****************************************************************************/
+.registration-form {
+  display: grid;
+  grid-row-gap: 10px;
 }

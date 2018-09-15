@@ -4,6 +4,8 @@ Flask-WTF
 WTForms
 coverage
 requests
+flask_migrate
+flask_script
 # ecdsa
 # paramiko
 # pycrypto
