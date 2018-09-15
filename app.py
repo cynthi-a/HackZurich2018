@@ -90,20 +90,41 @@ def searchResult():
         drugsList.append(drug)
 
       global drugId
-      setDrugId(drugsList[0]["swissmedicIds"])
+      drugId = drugs[0]["swissmedicIds"]
+      #setDrugId(drugs[0]["swissmedicIds"])
       return render_template("pages/searchresult.html", drugslist=drugsList)
-
-def setDrugId(_drugId):
-    drugId = _drugId
-    return drugId
-
-def getDrugId():
-    return drugId
 
 @app.route('/add')
 def addDrug():
-    drugId = getDrugId()
     return render_template("pages/add_drug.html", result = drugId)
+
+
+@app.route('/interaction')
+def checkInteraction():
+    #TODO: get list of drugs
+
+    #getNormIdByName(name)
+
+    name1 = 'aspirin'
+    name2 = 'test'
+    #get RxNorm
+    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name1
+    RxResponse = requests.get(RxUrl)
+    print("----RESPONSE-----")
+    print(RxResponse.text)
+    response = RxResponse.text
+    normId = response["rxnormId"]
+    print("-----PARSE----")
+    #print(normId)
+
+    return render_template("pages/interaction.html")
+
+#def getNormIdByName(name)
+#    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
+#    RxResponse = requests.get(RxUrl)
+
+
+
 
 # Error handlers.
 
