@@ -42,11 +42,11 @@ def login_required(test):
 # Controllers.
 #----------------------------------------------------------------------------#
 
+global searchDrug
 
 @app.route('/')
 def home():
     return render_template('pages/home.html')
-
 
 @app.route('/about')
 def about():
@@ -83,18 +83,20 @@ def searchResult():
       url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
       response = requests.get(url, headers={"Authorization":"awesome attention"})
       result = response.text
-      return render_template("pages/searchresult.html",result = result)
+      #parse api response
+      data = json.loads(result)
+      #TODO: loop thourgh all returned objects and all their strings
+      firstDrug = data[0]
+      drugId = firstDrug['swissmedicIds'][0]
+      name = firstDrug['title']
+      substances = firstDrug['substances'][0]
+      searchDrug = drugId
+      return render_template("pages/searchresult.html",drugId = drugId, name = name, substances = substances)
 
-
-# @app.route('/adduser', methods = ['POST', 'GET'])
-# def addUser():
-#     if request.method == 'POST':
-#         drugname = request.form['drugname']
-#         url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
-#         response = requests.get(url, headers={"Authorization":"awesome attention"})
-#         json_data = json.loads(response.text)
-#         durgid = json_data[0]
-#         return render_template("pages/add_drug.html", id = durgid)
+@app.route('/add')
+def addDrug():
+    result = searchDrug
+    return render_template("pages/add_drug.html", result = result)
 
 # Error handlers.
 
