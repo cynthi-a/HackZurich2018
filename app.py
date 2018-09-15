@@ -9,7 +9,7 @@ from logging import Formatter, FileHandler
 from forms import *
 import os
 import requests
-import urllib2
+import urllib
 import sys
 import re
 import json
@@ -169,7 +169,7 @@ def checkInteraction():
 
     #getDrugsInteraction
     prepareUrl = "https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=" + normId + "+" + normId2 + "+" + normId3
-    url = urllib2.urlopen(prepareUrl)
+    url = urllib.urlopen(prepareUrl)
     data = json.load(url)
 
     severity = data['fullInteractionTypeGroup'][0]['fullInteractionType'][0]['interactionPair'][0]['severity']
