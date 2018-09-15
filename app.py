@@ -90,6 +90,9 @@ def login_required(test):
 
 @app.route('/')
 def home():
+    allDrugs = Drug.query.all()
+    print("------")
+    print(allDrugs)
     return render_template('pages/home.html')
 
 @app.route('/about')
@@ -186,7 +189,6 @@ def checkInteraction():
     data = json.load(url)
 
     severity = data['fullInteractionTypeGroup'][0]['fullInteractionType'][0]['interactionPair'][0]['severity']
-    print("--------------" + severity)
     if (severity == "N/A"):
         flash('Everything is fine', 'error')
     else:
