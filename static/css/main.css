@@ -36,7 +36,7 @@ a {
 /* Various other styles end */
 
 /*****************************************************************************
- * Home
+ * home.html
  ****************************************************************************/
 .logo {
   height: 50px;
@@ -52,7 +52,7 @@ a {
   padding: 20px;
 }
 .drug-item {
-  border: 1px solid;
+  border: 1px solid #ccc;
   padding: 10px;
   align-items: center;
   display: flex;
@@ -65,3 +65,13 @@ a {
     grid-column-gap: 10px;
   }
 }
+
+/*****************************************************************************
+ * add_drug.html
+ ****************************************************************************/
+.add-drug{
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+

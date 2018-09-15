@@ -5,39 +5,45 @@
 <div class="page-header">
   <h1 >Your Drugs Cabinet</h1>
 </div>
-<div class="drugs-cabinet">
-  <div class="drug-item">
-    <h1 class="drug-title">
-      Ritalin
-    </h1>
-    <div class="drug-intake">
-      <h3>How to take</h3> 
-      <p>
-        2 times a day with water
-      </p>
+
+  {% include "pages/add_drug.html" %}
+
+  <div class="drugs-cabinet">
+    <div class="drug-item">
+      <h1 class="drug-title">
+        Ritalin
+      </h1>
+      <div class="drug-intake">
+        <h3>How to take</h3> 
+        <p>
+        {{ drug  }}
+        </p>
+      </div>
+    </div>
+    <div class="drug-item">
+      <h1 class="drug-title">
+        Aspirin
+      </h1>
+      <div class="drug-intake">
+        <h3>How to take</h3> 
+        <p>
+          2 times a day with water
+        </p>
+      </div>
+    </div>
+    <div class="drug-item">
+      <h1 class="drug-title">
+        Ritalin
+      </h1>
+      <div class="drug-intake">
+        <h3>How to take</h3> 
+        <p>
+          2 times a day with water
+        </p>
+      </div>
     </div>
   </div>
-  <div class="drug-item">
-    <h1 class="drug-title">
-      Ritalin
-    </h1>
-    <div class="drug-intake">
-      <h3>How to take</h3> 
-      <p>
-        2 times a day with water
-      </p>
-    </div>
-  </div>
-  <div class="drug-item">
-    <h1 class="drug-title">
-      Ritalin
-    </h1>
-    <div class="drug-intake">
-      <h3>How to take</h3> 
-      <p>
-        2 times a day with water
-      </p>
-    </div>
-  </div>
-</div>
+
+  {% include "pages/add_drug.html" %}
+
 {% endblock %}
