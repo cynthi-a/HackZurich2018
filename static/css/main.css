@@ -110,6 +110,13 @@ a {
   display: grid;
   grid-row-gap: 5px;
 }
+.quantity-field {
+  display: flex;
+  margin-right: 5px;
+}
+.quantity-and-button {
+  display: flex;
+}
 
 /*****************************************************************************
  * reorder.html
