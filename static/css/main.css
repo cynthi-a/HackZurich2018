@@ -35,8 +35,24 @@ a {
 
 /* Various other styles end */
 
-/************* home.html *****************/
+/*****************************************************************************
+ * Home
+ ****************************************************************************/
 .logo {
   height: 50px;
   width: 50px;
+}
+
+/************ medicine cabinet grid **********/
+.drugs-cabinet {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  grid-row-gap: 10px;
+}
+@media only screen and (min-width : 1224px) {
+  .drugs-cabinet {
+    grid-template-rows: unset;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px;
+  }
 }
