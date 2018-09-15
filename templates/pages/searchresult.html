@@ -2,9 +2,21 @@
 {% block title %}Search Result{% endblock %}
 {% block content %}
 <h1>Search Result</h1>
-<p>Swissmedig Id: {{ drugId }}</p>
-<p>Name: {{ name }}</p>
-<p>Substances: {{ substances }}</p>
 
-<a href="/add" type="button" class="btn btn-primary">Add Drug To Cabinet</a>
+<div class="search-result">
+  
+  {% for drug in drugslist %}
+  
+  <div class="drug-result">
+    <h4>Swissmedic Id</h4>
+    <div>{{ drug.swissmedicIds }}</div>
+    <p>Name: {{ drug.title }}</p>
+    <p>Substances: {{ drug.substances }}</p>
+    {{ drug.title  }}
+    <a href="/add" type="button" class="btn btn-primary">Add Drug To Cabinet</a>
+  </div>
+  
+  {% endfor %}
+
+</div>
 {% endblock %}

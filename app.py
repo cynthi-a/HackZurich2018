@@ -10,6 +10,7 @@ from forms import *
 import os
 import requests
 import json
+import sys
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -80,18 +81,17 @@ def searchResult():
       drugname = request.form['drugname']
       url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
       response = requests.get(url, headers={"Authorization":"awesome attention"})
-      result = response.text
 
       #parse api response
-      data = json.loads(result)
+      drugs = json.loads(response.text)
       #TODO: loop thourgh all returned objects and all their strings
-      firstDrug = data[0]
+      drugsList = []
+      for drug in drugs:
+        drugsList.append(drug)
+
       global drugId
-      drugId = firstDrug['swissmedicIds'][0]
-      name = firstDrug['title']
-      substances = firstDrug['substances'][0]
-      setDrugId(drugId)
-      return render_template("pages/searchresult.html", drugId = drugId, name = name, substances = substances)
+      setDrugId(drugsList[0]["swissmedicIds"])
+      return render_template("pages/searchresult.html", drugslist=drugsList)
 
 def setDrugId(_drugId):
     drugId = _drugId
