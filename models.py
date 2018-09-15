@@ -18,10 +18,20 @@ class User(db.Model):
 
     name = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(30))
+    drug = db.Column(db.Integer)
 
-    def __init__(self, name=None, password=None):
+    def __init__(self, name=None, password=None, drug=None):
         self.name = name
         self.password = password
+        self.drug = drug
+
+class Drugs(db.Model):
+    __tablename__ = 'Drugs'
+
+    drugId = db.Column(db.IntegerField)
+
+    def __init__(self, drugId=None):
+        self.drugId = drugId
 
 '''
 class User(Base):
@@ -39,6 +49,4 @@ class User(Base):
 
 # Create tables.
 Base.metadata.create_all(bind=engine)
-Base.metadata.db.session.add(User(name='Ron'))
-Base.metadata.db.session.add(User(email='ron@example.com'))
     #db.session.commit()
