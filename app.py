@@ -6,6 +6,9 @@ from flask import Flask, render_template, request, session, redirect, url_for
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
+
+from sqlalchemy import ForeignKey
+
 from forms import *
 import os
 import requests
@@ -47,13 +50,18 @@ class User(db.Model):
 
 
 
-class Drugs(db.Model):
-    __tablename__ = 'Drugs'
+class Drug(db.Model):
+    __tablename__ = 'Drug'
 
     drugId = db.Column(db.Integer, primary_key=True)
+    qty = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, ForeignKey('user.id'))
 
-    def __init__(self, drugId=None):
+
+    def __init__(self, drugId=None, qty=None, user_id=None):
         self.drugId = drugId
+        self.qty = qty
+        self.user_id = user_id
 
 
 
@@ -152,8 +160,12 @@ def searchResult():
       #setDrugId(drugs[0]["swissmedicIds"])
       return render_template("pages/searchresult.html", drugslist=drugsList)
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def addDrug():
+    if request.method == 'POST':
+        add_drug = Drug(drugId=drugId, qty=1, user_id=1)
+        db.session.add(add_drug)
+        db.session.commit()
     return render_template("pages/add_drug.html", result = drugId)
 
 
@@ -176,7 +188,6 @@ def checkInteraction():
 
     return render_template("pages/interaction.html", severity=severity)
 
-
 def getNormIdByName(name):
     RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
     RxResponse = requests.get(RxUrl)
@@ -186,11 +197,7 @@ def getNormIdByName(name):
 
     return normId
 
-
-
 # Error handlers.
-
-
 @app.errorhandler(500)
 def internal_error(error):
     #db_session.rollback()
