@@ -8,7 +8,8 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
-import requests 
+import requests
+import json
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -72,18 +73,28 @@ def forgot():
 @app.route('/search')
 def searchDrug():
     form = SearchDrugForm(request.form)
-    return render_template('forms/search_drugs.html', form=form, testuser = testuser) 
+    #return render_template('forms/search_drugs.html', form=form, testuser = testuser) 
+    return render_template('forms/search_drugs.html', form=form)
 
-
-@app.route('/search/result',methods = ['POST', 'GET'])
-def result():
+@app.route('/search/result', methods = ['POST', 'GET'])
+def searchResult():
    if request.method == 'POST':
       drugname = request.form['drugname']
       url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
-      r = requests.get(url, headers={"Authorization":"awesome attention"})
-      result = r.text
+      response = requests.get(url, headers={"Authorization":"awesome attention"})
+      result = response.text
       return render_template("pages/searchresult.html",result = result)
 
+
+# @app.route('/adduser', methods = ['POST', 'GET'])
+# def addUser():
+#     if request.method == 'POST':
+#         drugname = request.form['drugname']
+#         url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
+#         response = requests.get(url, headers={"Authorization":"awesome attention"})
+#         json_data = json.loads(response.text)
+#         durgid = json_data[0]
+#         return render_template("pages/add_drug.html", id = durgid)
 
 # Error handlers.
 
