@@ -75,13 +75,14 @@ def searchDrug():
     return render_template('forms/search_drugs.html', form=form) 
 
 
-
-# AXA api calls
-
-@app.route('/drug/aspirin')
-def drug():
-    r = requests.get('https://health.axa.ch/hack/api/drugs?name=aspirin', headers={"Authorization":"awesome attention"})
-    return r.text   
+@app.route('/search/result',methods = ['POST', 'GET'])
+def result():
+   if request.method == 'POST':
+      drugname = request.form['drugname']
+      url = 'https://health.axa.ch/hack/api/drugs?name=' + drugname
+      r = requests.get(url, headers={"Authorization":"awesome attention"})
+      result = r.text
+      return render_template("pages/searchresult.html",result = result)
 
 
 # Error handlers.
