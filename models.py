@@ -16,8 +16,10 @@ Base.query = db_session.query_property()
 class User(db.Model):
     __tablename__ = 'User'
 
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(30))
+    email = db.Column(db.String(120), unique=True)
     drug = db.Column(db.Integer)
 
     def __init__(self, name=None, password=None, drug=None):
