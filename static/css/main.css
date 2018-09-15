@@ -140,3 +140,8 @@ a {
   display: grid;
   grid-row-gap: 10px;
 }
+
+
+.alert.flash-ok {
+  color: green;
+}

@@ -2,7 +2,7 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
@@ -186,8 +186,14 @@ def checkInteraction():
     data = json.load(url)
 
     severity = data['fullInteractionTypeGroup'][0]['fullInteractionType'][0]['interactionPair'][0]['severity']
+    print("--------------" + severity)
+    if (severity == "N/A"):
+        flash('Everything is fine', 'error')
+    else:
+        flash('ATTENTION: your drugs might not interact with eacht other. Contact your doctor now!', 'error')
 
-    return render_template("pages/interaction.html", severity=severity)
+
+    return redirect(url_for('home'))
 
 def getNormIdByName(name):
     RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
