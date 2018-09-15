@@ -33,4 +33,4 @@ class ForgotForm(Form):
     )
 
 class SearchDrugForm(Form):
-    name = TextField('Enter name of drug', [DataRequired()])
+    drugname = TextField('Enter name of drug', [DataRequired()])
