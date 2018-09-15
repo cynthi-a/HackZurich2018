@@ -2,24 +2,60 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
 import requests
-import urllib2, json
+import urllib2
 import sys
 import re
+import json
+from flask_sqlalchemy import SQLAlchemy
+import sys
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
 
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config.from_object('config')
-#db = SQLAlchemy(app)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+
+########## MODDELS #############
+
+
+class User(db.Model):
+    __tablename__ = 'User'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(30))
+    email = db.Column(db.String(120), unique=True)
+
+    def __init__(self, username=None, password=None, email=None):
+        self.username = username
+        self.email = email
+        self.password = password
+
+
+
+class Drugs(db.Model):
+    __tablename__ = 'Drugs'
+
+    drugId = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, drugId=None):
+        self.drugId = drugId
+
+
 
 # Automatically tear down SQLAlchemy.
 '''
@@ -53,19 +89,39 @@ def about():
     return render_template('pages/placeholder.about.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
-    return render_template('forms/login.html', form=form)
+    if request.method == 'GET':
+        return render_template('forms/login.html', form=form)
+    else:
+        name = str(form.name)
+        passw = str(form.password)
+        email = str(form.email)
+        try:
+            data = User.query.filter_by(username=name, password=passw).first()
+            if data is not None:
+                session['logged_in'] = True
+                return redirect(url_for('home'))
+            else:
+                return 'Dont Login'
+        except:
+            return "Dont Login"
 
 
-@app.route('/register')
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
+    if request.method == 'POST':
+        new_user = User(username=str(form.name), password=str(form.password), email=str(form.email))
+        db.session.add(new_user)
+        db.session.commit()
+        return render_template('forms/login.html', form=form)
     return render_template('forms/register.html', form=form)
 
 
-@app.route('/forgot')
+@app.route('/forgot' )
 def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)

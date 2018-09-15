@@ -1,4 +1,12 @@
-<div class="add-drug">
-	<p>Drug added</p>
-	<p>{{ result }}</p>
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div>
+  <div>
+    <p>Drug added (MedicId: {{ result }})</p>
+  </div>
+  <div>
+    <a href="/" class="btn btn-primary">Back to Home</a>
+  </div>
 </div>
+{% endblock %}
