@@ -9,8 +9,19 @@
   
   <div class="drugs-result">
     <strong>{{ drug.title }}</strong>
-    <div><strong>Swissmedic Id</strong>: {{ drug.swissmedicIds }}</div>
-    <div><strong>Substances</strong>{{ drug.substances }}</div>
+    <div><strong>Swissmedic Id</strong>:
+      {% for swissmedicId in drug.swissmedicIds %}
+      {{ swissmedicId }}, 
+      {% endfor %}
+    
+    </div>
+    {% if drug.substances %}
+    <div><strong>Substances</strong>:
+      {% for substance in drug.substances %}
+      {{ substance }}, 
+      {% endfor %}
+    </div>
+    {% endif %} 
     <a href="/add" type="button" class="btn btn-primary">Add To Cabinet</a>
   </div>
   
