@@ -1,2 +1,7 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Search Result{% endblock %}
+{% block content %}
 <h1>Search Result</h1>
-<p>The drug is {{ result }} </p>
+<p>{{ result }}</p>
+<button class="btn btn-primary">Add To Cabinet</button>
+{% endblock %}
