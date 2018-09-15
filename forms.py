@@ -31,3 +31,6 @@ class ForgotForm(Form):
     email = TextField(
         'Email', validators=[DataRequired(), Length(min=6, max=40)]
     )
+
+class SearchDrugForm(Form):
+    name = TextField('Enter name of drug', [DataRequired()])

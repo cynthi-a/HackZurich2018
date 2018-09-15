@@ -8,6 +8,7 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
+import requests 
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -67,6 +68,21 @@ def register():
 def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
+
+@app.route('/search')
+def searchDrug():
+    form = SearchDrugForm(request.form)
+    return render_template('forms/search_drugs.html', form=form) 
+
+
+
+# AXA api calls
+
+@app.route('/drug/aspirin')
+def drug():
+    r = requests.get('https://health.axa.ch/hack/api/drugs?name=aspirin', headers={"Authorization":"awesome attention"})
+    return r.text   
+
 
 # Error handlers.
 
