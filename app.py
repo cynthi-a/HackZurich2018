@@ -84,7 +84,8 @@ def searchResult():
 
       #parse api response
       drugs = json.loads(response.text)
-      #TODO: loop thourgh all returned objects and all their strings
+
+      # loop thourgh all returned objects and all their strings
       drugsList = []
       for drug in drugs:
         drugsList.append(drug)
