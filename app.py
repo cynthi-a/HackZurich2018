@@ -9,8 +9,9 @@ from logging import Formatter, FileHandler
 from forms import *
 import os
 import requests
-import json
+import urllib2, json
 import sys
+import re
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -103,27 +104,31 @@ def addDrug():
 @app.route('/interaction')
 def checkInteraction():
     #TODO: get list of drugs
+    name1 = 'lipitor'
+    name2 = 'paracetamol'
+    name3 = 'ritalin'
+    normId = str(getNormIdByName(name1))
+    normId2 = str(getNormIdByName(name2))
+    normId3 = str(getNormIdByName(name3))
 
-    #getNormIdByName(name)
+    #getDrugsInteraction
+    prepareUrl = "https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=" + normId + "+" + normId2 + "+" + normId3
+    url = urllib2.urlopen(prepareUrl)
+    data = json.load(url)
 
-    name1 = 'aspirin'
-    name2 = 'test'
-    #get RxNorm
-    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name1
+    severity = data['fullInteractionTypeGroup'][0]['fullInteractionType'][0]['interactionPair'][0]['severity']
+
+    return render_template("pages/interaction.html", severity=severity)
+
+
+def getNormIdByName(name):
+    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
     RxResponse = requests.get(RxUrl)
-    print("----RESPONSE-----")
-    print(RxResponse.text)
     response = RxResponse.text
-    normId = response["rxnormId"]
-    print("-----PARSE----")
-    #print(normId)
+    numbers = map(int, re.findall(r'\d+', response))
+    normId = numbers[-1]
 
-    return render_template("pages/interaction.html")
-
-#def getNormIdByName(name)
-#    RxUrl = "https://rxnav.nlm.nih.gov/REST/rxcui?name=" + name
-#    RxResponse = requests.get(RxUrl)
-
+    return normId
 
 
 
