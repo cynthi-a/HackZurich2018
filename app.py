@@ -92,8 +92,9 @@ def login():
     if request.method == 'GET':
         return render_template('forms/login.html', form=form)
     else:
-        name = request.form['username']
-        passw = request.form['password']
+        name = str(form.name)
+        passw = str(form.password)
+        email = str(form.email)
         try:
             data = User.query.filter_by(username=name, password=passw).first()
             if data is not None:
