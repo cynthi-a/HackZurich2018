@@ -3,8 +3,10 @@
 {% block content %}
 
 <form method="post" class="form form-reset" action = "http://localhost:5000/search/result">
+  <div class="form-group">
 	 <h3 class="form-heading">Search for Drug <a href="{{ url_for('home') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
 	{{ form.drugname(class_ = 'form-control first-input', placeholder = form.drugname.label.text, required = true, autofocus = true) }}
-    <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block">
+    <input type="submit" value="Submit" class="btn btn-primary btn-lg">
+  </div>
 </form>
 {% endblock %}
