@@ -38,6 +38,12 @@ a {
 .drug-info {
   width: -webkit-fill-available;
 }
+form {
+  display: flex;
+}
+#drugname {
+  width: -webkit-fill-available;
+}
 
 /* Various other styles end */
 
