@@ -34,11 +34,17 @@
     </div>
     <div class="drug-item">
       <h1 class="drug-title">
-        Ritalin
+        Paracetamol
       </h1>
       <div class="drug-info">
         {% include "components/drug-information.html" %}
-        {% include "components/progress-bar.html" %}
+        <h4 class="progress-label">
+          Drug Stock Level
+        </h4>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped text-center" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+          </div>
+        </div>
         {% include "components/reorder.html" %}
       </div>
     </div>
