@@ -132,6 +132,9 @@ a {
 .search-drug-form {
   display: flex;
 }
+.drug-search-form {
+  display: flex;
+}
 
 /*****************************************************************************
  * register.html
